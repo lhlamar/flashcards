@@ -1,0 +1,115 @@
+
+
+
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+li {
+    padding: 7px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+nav ul li {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+
+
+.main-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.main-folder-container {
+    width: 40vw;
+    
+    background-color: var(--wenge);
+    text-align: center;
+    margin-right: 10px;
+    clip-path: inset(0 round 25px);
+}
+
+.folder-container {
+    background-color: var(--onyx-gray);
+    margin: 20px;
+    outline: 3px solid black;
+    overflow-y: scroll;
+    height: 300px;
+}
+
+
+
+
+.main-set-container {
+    width: 40vw;
+    background-color: var(--wenge);
+    text-align: center;
+    margin-left: 10px;
+    clip-path: inset(0 round 25px);
+}
+
+.set-container {
+    background-color: var(--onyx-gray);
+    margin: 20px;
+    outline: 3px solid black;
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.folder-item {
+    display: block;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    background-color: var(--onyx-dark);
+    padding: 5px;
+    color: var(--bone);
+    clip-path: inset(0 round 7px);
+}
+
+.folder-item:hover {
+    background-color: var(--bone);
+    color: var(--onyx);
+}
+
+
+
+
+
+.new-item-button {
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.button {
+    background-color: var(--bone);
+    color: var(--onyx);
+    clip-path: inset(0 round 10px);
+}
+
+.button:hover {
+    color: var(--bone);
+    background-color: var(--onyx-gray);
+}
+
+
