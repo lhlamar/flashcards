@@ -1,55 +1,52 @@
 * {
-    --bone: #E0DDCF;
-    --wenge: #534b52;
-    --isabelline: #f1f0ea;
-    --raisin-black: #2d232e;
-    --onyx: #474448;
-    --onyx-dark: #242125;
-    --onyx-gray: #7B757D;
+  --bone: #e0ddcf;
+  --wenge: #534b52;
+  --isabelline: #f1f0ea;
+  --raisin-black: #2d232e;
+  --onyx: #474448;
+  --onyx-dark: #242125;
+  --onyx-medium: #3e3e48;
+  --onyx-gray: #7b757d;
 }
 
 html {
-    background-color: var(--onyx-dark);
-    font-family: "Arial Rounded MT";
-    color: var(--bone);
+  background-color: var(--onyx-dark);
+  font-family: "Arial Rounded MT";
+  color: var(--bone);
 }
 
 .button {
-    background-color: var(--bone);
-    color: var(--onyx);
-    clip-path: inset(0 round 10px);
+  background-color: var(--bone);
+  color: var(--onyx);
+  clip-path: inset(0 round 10px);
 }
 
 .button:hover {
-    color: var(--bone);
-    background-color: var(--onyx-gray);
+  color: var(--bone);
+  background-color: var(--onyx-gray);
 }
 
 .header-item {
-    color: var(--bone);
-    text-decoration: none;
-    list-style-type: none;
-    
+  color: var(--bone);
+  text-decoration: none;
+  list-style-type: none;
 }
 
-
-
 .header-button:hover {
-    background-color: var(--bone);
-    color: var(--onyx-dark);
-    padding: 3px;
-    clip-path: inset( 0 round 3px);
-
+  background-color: var(--bone);
+  color: var(--onyx-dark);
+  padding: 3px;
+  clip-path: inset(0 round 3px);
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--onyx);
+  background: var(--onyx);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--bone);
+  background: var(--bone);
 }

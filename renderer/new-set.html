@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
-    <link rel="stylesheet" href="./css/utils.css">
-    <link rel="stylesheet" href="./css/new-set.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
+    <link rel="stylesheet" href="./css/utils.css" />
+    <link rel="stylesheet" href="./css/new-set.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- nav bar  -->
     <nav>
-        <ul>
-            <!-- navigation bar -->
-            <li><a id="back-button" class="header-item header-button" href="#">Back</a></li>
-            <li><a class="header-item header-button" href="#">How to use</a></li>
-            <li><a class="header-item">New Set</a></li>
-        </ul>
+      <ul>
+        <!-- navigation bar -->
+        <li>
+          <a id="back-button" class="header-item header-button" href="#"
+            >Back</a
+          >
+        </li>
+        <li><a class="header-item header-button" href="#">How to use</a></li>
+        <li><a class="header-item">New Set</a></li>
+      </ul>
     </nav>
     <!-- start of main page -->
-        <!-- container for the folder -->
-        <div class="main-container">
-            <div class="new-set-container">
-                <div class="section-header">
-                    <h1>New Set</h1>
-                </div>
-                <div class="flashcard-list-container">
-                    
-                    <div class="card">
-                        <div class="front">
-                            <label>Front</label>
-                            <textarea></textarea>
-                        </div>
-                        <div class="back">
-                            <label>Back</label>
-                            <textarea></textarea>
-                        </div>
-                    </div>
-
-                </div>
+    <!-- container for the folder -->
+    <div class="main-container">
+      <div class="new-set-container">
+        <div class="section-header">
+          <h1>New Set</h1>
+        </div>
+        <div class="flashcard-list-container">
+          <div class="card-container">
+            <h3 class="card-header">card 1</h3>
+            <div class="card-contents">
+              <div class="front">
+                <label>Front</label>
+                <textarea></textarea>
+              </div>
+              <div class="back">
+                <label>Back</label>
+                <textarea></textarea>
+              </div>
             </div>
-            <h2 class="new-item-button-container"><a class="new-item-button button" href="#">new +</a></h2>
-
+          </div>
+          <div class="card-container">
+            <h3 class="card-header">card 2</h3>
+            <div class="card-contents">
+              <div class="front">
+                <label>Front</label>
+                <textarea></textarea>
+              </div>
+              <div class="back">
+                <label>Back</label>
+                <textarea></textarea>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="new-item-button-container">
+        <a id="new-item-button" class="new-item-button button" href="#"
+          >new +</a
+        >
+      </h2>
+    </div>
     <script src="./js/new-set.js"></script>
-</body>
+  </body>
 </html>

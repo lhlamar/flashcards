@@ -1,115 +1,118 @@
-
-
-
-
-
 nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
 }
 
 ul {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
-
 li {
-    padding: 7px;
-    padding-left: 10px;
-    padding-right: 20px;
+  padding: 7px;
+  padding-left: 10px;
+  padding-right: 20px;
 }
 
 nav ul li {
-    display: block;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
-
-
-
 .main-container {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
+  margin-top: 35px;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
 }
 
 .main-folder-container {
-    width: 40vw;
-    
-    background-color: var(--wenge);
-    text-align: center;
-    margin-right: 10px;
-    clip-path: inset(0 round 25px);
+  min-width: 300px;
+  width: 40vw;
+
+  background-color: var(--wenge);
+  text-align: center;
+  margin-right: 10px;
+  clip-path: inset(0 round 20px);
 }
 
 .folder-container {
-    background-color: var(--onyx-gray);
-    margin: 20px;
-    outline: 3px solid black;
-    overflow-y: scroll;
-    height: 300px;
+  background-color: var(--onyx-gray);
+  margin: 20px;
+  outline: 3px solid black;
+  overflow-y: scroll;
+  height: calc(100% - 145px);
 }
 
-
-
-
 .main-set-container {
-    width: 40vw;
-    background-color: var(--wenge);
-    text-align: center;
-    margin-left: 10px;
-    clip-path: inset(0 round 25px);
+  min-width: 300px;
+  width: 40vw;
+  background-color: var(--wenge);
+  text-align: center;
+  margin-left: 10px;
+  clip-path: inset(0 round 20px);
 }
 
 .set-container {
-    background-color: var(--onyx-gray);
-    margin: 20px;
-    outline: 3px solid black;
-    overflow-y: scroll;
-    height: 300px;
+  background-color: var(--onyx-gray);
+  margin: 20px;
+  outline: 3px solid black;
+  overflow-y: scroll;
+  height: calc(100% - 145px);
 }
 
 .folder-item {
-    display: block;
-    margin: 0px;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    background-color: var(--onyx-dark);
-    padding: 5px;
-    color: var(--bone);
-    clip-path: inset(0 round 7px);
+  display: block;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  background-color: var(--onyx-dark);
+  padding: 5px;
+  color: var(--bone);
+  clip-path: inset(0 round 7px);
 }
 
 .folder-item:hover {
-    background-color: var(--bone);
-    color: var(--onyx);
+  background-color: var(--bone);
+  color: var(--onyx);
 }
 
-
-
-
-
 .new-item-button {
-    text-decoration: none;
-    padding: 5px 10px;
+  text-decoration: none;
+  padding: 5px 10px;
 }
 
 .button {
-    background-color: var(--bone);
-    color: var(--onyx);
-    clip-path: inset(0 round 10px);
+  background-color: var(--bone);
+  color: var(--onyx);
+  clip-path: inset(0 round 10px);
 }
 
 .button:hover {
-    color: var(--bone);
-    background-color: var(--onyx-gray);
+  color: var(--bone);
+  background-color: var(--onyx-gray);
 }
 
+/* xs */
+/* @media (min-width: 475px) {} */
 
+/* sm */
+/* @media (min-width: 640px) {} */
+
+/* md */
+/* @media (min-width: 786px) {} */
+
+/* lg */
+/* @media (min-width: 1024px) {} */
+
+/* xl */
+/* @media (min-width: 1280px) {} */
+
+/* 2xl */
+/* @media (min-width: 1536px) {} */
