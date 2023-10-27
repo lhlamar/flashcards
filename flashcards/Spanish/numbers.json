@@ -1,0 +1,16 @@
+{
+  "flashcards": [
+    {
+      "front": "uno",
+      "back": "one"
+    },
+    {
+      "front": "dos",
+      "back": "two"
+    },
+    {
+      "front": "tres",
+      "back": "three"
+    }
+  ]
+}

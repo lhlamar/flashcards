@@ -1,7 +1,10 @@
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
+const loadFlashCards = require("./LoadCards");
+const LoadCards = require("./LoadCards");
 
 let mainWindow;
+let howToUseWindow;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -22,17 +25,41 @@ function createHomeWindow() {
 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+  console.log(LoadCards.getFolders());
 }
 
 //create new card window
 ipcMain.on("open-new-set-window", () => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+
   mainWindow.loadFile(path.join(__dirname, "../renderer/new-set.html"));
 });
 
+//reloads the main window
 ipcMain.on("open-home-window", () => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+});
+
+//loads the study set window
+ipcMain.on("open-study-set-window", () => {
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  mainWindow.loadFile(path.join(__dirname, "../renderer/study-set.html"));
+});
+
+// How To Use Window
+ipcMain.on("open-how-to-use-window", () => {
+  howToUseWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+      minWidth: 475,
+    },
+  });
+
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  howToUseWindow.loadFile(path.join(__dirname, "../renderer/how-to-use.html"));
 });
 
 // This method will be called when Electron has finished

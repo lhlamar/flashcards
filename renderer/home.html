@@ -1,64 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
-    <link rel="stylesheet" href="./css/utils.css">
-    <link rel="stylesheet" href="./css/home.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
+    <link rel="stylesheet" href="./css/utils.css" />
+    <link rel="stylesheet" href="./css/home.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- nav bar  -->
     <nav>
-        <ul class="nav-container">
-            <li><a class="header-item">Home</a></li>
-            <li><a class="header-item header-button" href="#">How to use</a></li>
-        </ul>
+      <ul class="nav-container">
+        <li><a class="header-item">Home</a></li>
+        <li>
+          <a id="how-to-use-button" class="header-item header-button" href="#"
+            >How to use</a
+          >
+        </li>
+      </ul>
     </nav>
     <!-- body of home -->
     <div class="main-container">
-        <!-- container for the folder -->
-        <div class="main-folder-container">
-            <div class="section-header">
-                <h1>Folders</h1>
-            </div>
-            <div class="folder-container">
-                <ul>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                </ul>
-            </div>
-            <h2><a class="new-item-button button" href="#">new +</a></h2>
+      <!-- container for the folder -->
+      <div class="main-folder-container">
+        <div class="section-header">
+          <h1>Folders</h1>
         </div>
+        <div class="folder-container">
+          <ul id="folder-list">
+            <li><a href="#" class="folder-item">Geology</a></li>
+          </ul>
+        </div>
+        <h2><a class="new-item-button button" href="#">new +</a></h2>
+      </div>
 
-        <div class="main-set-container">
-            <h1>Sets</h1>
-            <div class="set-container">
-                <ul>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                    <li><a href="#" class="folder-item">Geology</a></li>
-                </ul>
-            </div>
-            <h2><a id="new-folder-button" class="new-item-button button" href="#">new +</a></h2>
+      <div class="main-set-container">
+        <h1>Sets</h1>
+        <div class="set-container">
+          <ul id="set-list"></ul>
         </div>
+        <h2>
+          <a id="new-folder-button" class="new-item-button button" href="#"
+            >new +</a
+          >
+        </h2>
+      </div>
     </div>
     <script src="./js/home.js"></script>
-</body>
+  </body>
 </html>
