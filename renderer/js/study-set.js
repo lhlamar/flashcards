@@ -1,0 +1,52 @@
+const back_button = document.getElementById("back-button");
+const center_card = document.querySelector(".center-card");
+
+back_button.addEventListener("click", () => {
+  ipcRenderer.send("open-home-window");
+});
+
+function load_with_cards() {}
+
+function animate({ duration, draw, timing }) {
+  //performance.now() returns time from start of process until
+  //the time called.
+  let start = performance.now();
+
+  //initiates the animation using
+  //invokes a callback function on the next repaint of the
+  //browser
+  //time is the obtained by performance.now()
+  requestAnimationFrame(function animate(time) {
+    //calculates the time fraction(progress) of the
+    //animation based on the difference between
+    //the current time ('time') and the start time,
+    //divided by the specified duration
+    let timeFraction = (time - start) / duration;
+    if (timeFraction > 1) timeFraction = 1;
+
+    //uses specified timing function to calculate the timing of
+    //the animation
+    let progress = timing(timeFraction);
+
+    draw(progress);
+
+    //if timefraction has not exceeded 1, then the animation
+    //continues
+    if (timeFraction < 1) {
+      requestAnimationFrame(animate);
+    }
+  });
+}
+
+animate({
+  duration: 1000,
+  //this is where the timing function is defined
+  //this can be changed to quadratic and a number of other function
+  //to change the rate that the animation changes
+  timing(timeFraction) {
+    return timeFraction; // linear
+  },
+  draw(progress) {
+    center_card.style.left = progress * 100 + "px";
+  },
+});

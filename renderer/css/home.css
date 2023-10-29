@@ -76,6 +76,8 @@ nav ul li {
   padding: 5px;
   color: var(--bone);
   clip-path: inset(0 round 7px);
+  cursor: default;
+  user-select: none;
 }
 
 .folder-item:hover {
