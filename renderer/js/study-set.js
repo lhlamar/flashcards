@@ -1,11 +1,10 @@
 const back_button = document.getElementById("back-button");
 const center_card = document.querySelector(".center-card");
+console.log(ipcRenderer.sendSync("get-set-data", "ping"));
 
 back_button.addEventListener("click", () => {
   ipcRenderer.send("open-home-window");
 });
-
-function load_with_cards() {}
 
 function animate({ duration, draw, timing }) {
   //performance.now() returns time from start of process until

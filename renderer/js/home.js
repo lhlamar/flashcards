@@ -66,7 +66,11 @@ function loadSets(folder) {
       //send the url of the set to load
       ipcRenderer.send(
         "open-study-set-window",
-        "../flashcards/" + folder + "/" + folderContents[set]
+        "../flashcards/flashcards/" +
+          folder +
+          "/" +
+          event.target.textContent +
+          ".json"
       );
     });
   }

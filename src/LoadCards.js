@@ -57,7 +57,7 @@ function getFolderContents(folder) {
 //of the set that needs to be retrived
 //returns a list of cards. each item in the list has a
 //front and a back that it returns as well
-function getSetContents(set) {
+function getSetContents(set, callback) {
   const fs = require("fs");
 
   // Specify the path to your JSON file
@@ -67,6 +67,7 @@ function getSetContents(set) {
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading the file:", err);
+      callback(err, null);
       return;
     }
 
@@ -75,9 +76,11 @@ function getSetContents(set) {
       const jsonData = JSON.parse(data);
 
       // Now you can work with the JSON data
-      console.log(jsonData);
+
+      callback(null, jsonData);
     } catch (error) {
       console.error("Error parsing JSON:", error);
+      callback(error, null);
     }
   });
 }

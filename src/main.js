@@ -6,6 +6,7 @@ const LoadCards = require("./LoadCards");
 let mainWindow;
 let howToUseWindow;
 let folders = LoadCards.getFolders();
+let set_data;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -57,8 +58,19 @@ ipcMain.on("open-home-window", () => {
 ipcMain.on("open-study-set-window", (event, data) => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   mainWindow.loadFile(path.join(__dirname, "../renderer/study-set.html"));
-  console.log(data);
-  event.returnValue = LoadCards.getSetContents(data);
+
+  LoadCards.getSetContents(data, (error, jsonData) => {
+    if (error) {
+      // Handle the error
+    } else {
+      // Work with the jsonData here
+      set_data = jsonData;
+    }
+  });
+});
+
+ipcMain.on("get-set-data", (event) => {
+  event.returnValue = set_data;
 });
 
 // How To Use Window
