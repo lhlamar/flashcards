@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -25,29 +29,76 @@ nav ul li {
 }
 
 .flashcard-container {
-  height: calc(100vh - 100px);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
+  
+  
 }
 
 .flashcard-list {
   list-style-type: none;
   text-wrap: nowrap;
+  
 }
 
-.flashcard {
-  display: inline;
+
+.card {
   position: absolute;
-  background: var(--onyx-gray);
-  margin-left: 20px;
-  margin-right: 20px;
-  text-wrap: nowrap;
+  background-color: var(--onyx-gray);
+  width: 400px;
+  height: 200px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 
-.left-card {
+.curr-card {
+  left: 50vw;
+  top: 50vh;
+  height: 300px;
+  transform: translate(-50%, -50%);
+
 }
 
-.right-card {
+.next-card {
+  top: 50vh;
+  right: -350px;
+  transform: translate(0, -50%);
+}
+
+.prev-card {
+  top: 50vh;
+  left: -350px;
+  transform: translate(0, -50%);
+}
+
+/* xs */
+@media (min-width: 475px) {
+  
+}
+
+/* sm */
+@media (min-width: 640px) {
+  
+}
+
+/* md */
+@media (min-width: 786px) {
+  
+}
+
+/* lg */
+@media (min-width: 1024px) {
+  
+}
+
+/* xl */
+@media (min-width: 1280px) {
+  
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+  
 }

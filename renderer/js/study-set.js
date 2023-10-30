@@ -1,44 +1,50 @@
+import {animate} from './animate.js';
+
+//selectors for page elements
 const back_button = document.getElementById("back-button");
 const center_card = document.querySelector(".center-card");
-console.log(ipcRenderer.sendSync("get-set-data", "ping"));
+const flashcard_page_list = document.querySelector(".flashcard-list");
+let current = 1;
+let next = 2;
+let prev = 0;
 
+//retrieves data from whatever set what clicked on on the
+//"home" page
+const set_data = ipcRenderer.sendSync("get-set-data");
+const flashcards = set_data.flashcards;
+console.log(flashcards);
+
+//sends message to main process when back button is clicked
+//to load the home window
 back_button.addEventListener("click", () => {
   ipcRenderer.send("open-home-window");
 });
 
-function animate({ duration, draw, timing }) {
-  //performance.now() returns time from start of process until
-  //the time called.
-  let start = performance.now();
 
-  //initiates the animation using
-  //invokes a callback function on the next repaint of the
-  //browser
-  //time is the obtained by performance.now()
-  requestAnimationFrame(function animate(time) {
-    //calculates the time fraction(progress) of the
-    //animation based on the difference between
-    //the current time ('time') and the start time,
-    //divided by the specified duration
-    let timeFraction = (time - start) / duration;
-    if (timeFraction > 1) timeFraction = 1;
 
-    //uses specified timing function to calculate the timing of
-    //the animation
-    let progress = timing(timeFraction);
-
-    draw(progress);
-
-    //if timefraction has not exceeded 1, then the animation
-    //continues
-    if (timeFraction < 1) {
-      requestAnimationFrame(animate);
-    }
-  });
+//creates cards elements and displays them on page
+//based on given array of cards
+for (const [index, card] of flashcards.entries()) {
+  const display_card = document.createElement("li");
+  display_card.classList.add("card");
+  if (index === current) display_card.classList.add("curr-card");;
+  if (index === next) display_card.classList.add("next-card");;
+  if (index === prev) display_card.classList.add("prev-card");;
+  display_card.textContent = card.front;
+  flashcard_page_list.appendChild(display_card);
 }
 
+
+
+
+
+
+
+
+//animates the page events
+//defined in animate.js
 animate({
-  duration: 1000,
+  duration: 300,
   //this is where the timing function is defined
   //this can be changed to quadratic and a number of other function
   //to change the rate that the animation changes

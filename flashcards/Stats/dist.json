@@ -1,0 +1,16 @@
+{
+  "flashcards": [
+    {
+      "front": "binomial",
+      "back": "series of bernoulli trials"
+    },
+    {
+      "front": "bernoulli",
+      "back": "true or false basically"
+    },
+    {
+      "front": "Normal dist",
+      "back": "a type of dist that confroms to a 'normal graph"
+    }
+  ]
+}

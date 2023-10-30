@@ -20,9 +20,11 @@ function createHomeWindow() {
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
-      minWidth: 475,
     },
+    minWidth: 520,
+    minHeight: 450,
   });
+  
   mainWindow.webContents.openDevTools();
 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
