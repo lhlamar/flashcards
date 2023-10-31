@@ -4,54 +4,109 @@ import {animate} from './animate.js';
 const back_button = document.getElementById("back-button");
 const center_card = document.querySelector(".center-card");
 const flashcard_page_list = document.querySelector(".flashcard-list");
-let current = 1;
-let next = 2;
-let prev = 0;
+let current = 0;
+let next = 1;
+let prev = -1;
+let curr_display_card;
+let prev_display_card;
+let next_display_card;
 
 //retrieves data from whatever set what clicked on on the
 //"home" page
 const set_data = ipcRenderer.sendSync("get-set-data");
 const flashcards = set_data.flashcards;
-console.log(flashcards);
+
+for (const card of flashcards) {
+  card.isFront = true;
+}
 
 //sends message to main process when back button is clicked
 //to load the home window
 back_button.addEventListener("click", () => {
   ipcRenderer.send("open-home-window");
 });
-
-
+//controls for cards
+document.addEventListener("keypress", (event) => {
+  handle_card_controls(event);
+})
 
 //creates cards elements and displays them on page
 //based on given array of cards
-for (const [index, card] of flashcards.entries()) {
-  const display_card = document.createElement("li");
-  display_card.classList.add("card");
-  if (index === current) display_card.classList.add("curr-card");;
-  if (index === next) display_card.classList.add("next-card");;
-  if (index === prev) display_card.classList.add("prev-card");;
-  display_card.textContent = card.front;
-  flashcard_page_list.appendChild(display_card);
+function make_cards() {
+  for (const [index, card] of flashcards.entries()) {
+    if (index === current) {
+      curr_display_card = document.createElement("li");
+      curr_display_card.classList.add("card");
+      curr_display_card.classList.add("curr-card");
+      if (card.isFront) {
+        curr_display_card.textContent = card.front;
+      }
+      else {
+        curr_display_card.textContent = card.back;
+      }
+    flashcard_page_list.appendChild(curr_display_card);
+    }
+    else if (index === next) {
+      next_display_card = document.createElement("li");
+      next_display_card.classList.add("card");
+      next_display_card.classList.add("next-card");
+      next_display_card.textContent = card.front;
+      if (card.isFront) {
+        next_display_card.textContent = card.front;
+      }
+      else {
+        next_display_card.textContent = card.back;
+      }
+    flashcard_page_list.appendChild(next_display_card);
+    }
+    else if (index === prev) {
+      prev_display_card = document.createElement("li");
+      prev_display_card.classList.add("card");
+      prev_display_card.classList.add("prev-card");
+      prev_display_card.textContent = card.front;
+      if (card.isFront) {
+        prev_display_card.textContent = card.front;
+      }
+      else {
+        prev_display_card.textContent = card.back;
+      }
+    flashcard_page_list.appendChild(prev_display_card);
+    }
+  }
+}
+
+function clear_cards(list) {
+  list.innerHTML = '';
+}
+
+function handle_card_controls(event) {
+  if (event.key === 'd' && current != flashcards.length - 1) {
+    current++;
+    next++;
+    prev++;
+  }
+  if (event.key === 'a' && current != 0) {
+    current--;
+    next--;
+    prev--;
+  }
+  if (event.key === 'w' || event.key === 's') {
+    flashcards[current].isFront = !flashcards[current].isFront;
+    curr_display_card.textContent = '';
+    curr_display_card.classList.add('animate');
+  }
+  setTimeout(function() {
+    console.log("This message will appear after a 2-second pause.");
+    clear_cards(flashcard_page_list);
+    make_cards();
+  }, 400); // 2000 milliseconds (2 seconds)
 }
 
 
 
+//main processes start here 
+make_cards();
+// animates the page events
+// defined in animate.js
 
 
-
-
-
-//animates the page events
-//defined in animate.js
-animate({
-  duration: 300,
-  //this is where the timing function is defined
-  //this can be changed to quadratic and a number of other function
-  //to change the rate that the animation changes
-  timing(timeFraction) {
-    return timeFraction; // linear
-  },
-  draw(progress) {
-    center_card.style.left = progress * 100 + "px";
-  },
-});

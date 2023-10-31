@@ -54,11 +54,11 @@ nav ul li {
 }
 
 .curr-card {
-  left: 50vw;
-  top: 50vh;
+  left: 25vw;
+  top: 25vh;
   height: 300px;
-  transform: translate(-50%, -50%);
-
+  
+  
 }
 
 .next-card {
@@ -71,6 +71,12 @@ nav ul li {
   top: 50vh;
   left: -350px;
   transform: translate(0, -50%);
+}
+
+.animate {
+  transition: 0.5s;
+  
+  transform: rotateY(180deg);
 }
 
 /* xs */
