@@ -100,11 +100,11 @@ ipcMain.on("open-new-folder-window", () => {
       preload: path.join(__dirname, "preload.js"),
       
     },
-    width: 600,
-    height: 600,
+    width: 300,
+    height: 150,
     resizable: false,
   });
- newFolderWindow.webContents.openDevTools();
+ 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   newFolderWindow.loadFile(path.join(__dirname, "../renderer/new-folder.html"));
 });
@@ -117,6 +117,7 @@ ipcMain.on("close-new-folder-window", () => {
 //creates new folder based on the data input
 ipcMain.on("new-folder-request", (event, data) => {
   LoadCards.newFolder(data);
+  mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
 });
 
 

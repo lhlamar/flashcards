@@ -12,4 +12,5 @@ cancel_button.addEventListener('click', () => {
 done_button.addEventListener('click', () => {
     
     ipcRenderer.send('new-folder-request', new_folder_input.value);
+    ipcRenderer.send('close-new-folder-window');
 });
