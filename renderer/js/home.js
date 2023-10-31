@@ -1,4 +1,5 @@
 const how_to_use_button = document.getElementById("how-to-use-button");
+const new_set_button = document.getElementById("new-set-button");
 const new_folder_button = document.getElementById("new-folder-button");
 const folder_list = document.getElementById("folder-list");
 const set_list = document.getElementById("set-list");
@@ -9,9 +10,13 @@ how_to_use_button.addEventListener("click", () => {
   ipcRenderer.send("open-how-to-use-window");
 });
 
-new_folder_button.addEventListener("click", () => {
+new_set_button.addEventListener("click", () => {
   ipcRenderer.send("open-new-set-window");
 });
+
+new_folder_button.addEventListener("click", () => {
+  ipcRenderer.send("open-new-folder-window");
+})
 
 //sends request to main process asking for folders in the set
 folders = ipcRenderer.sendSync("main", "ping");

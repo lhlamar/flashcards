@@ -5,6 +5,7 @@ const LoadCards = require("./LoadCards");
 
 let mainWindow;
 let howToUseWindow;
+let newFolderWindow;
 let folders = LoadCards.getFolders();
 let set_data;
 
@@ -89,6 +90,35 @@ ipcMain.on("open-how-to-use-window", () => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   howToUseWindow.loadFile(path.join(__dirname, "../renderer/how-to-use.html"));
 });
+
+// new folder Window
+ipcMain.on("open-new-folder-window", () => {
+  newFolderWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+      
+    },
+    width: 600,
+    height: 600,
+    resizable: false,
+  });
+ newFolderWindow.webContents.openDevTools();
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  newFolderWindow.loadFile(path.join(__dirname, "../renderer/new-folder.html"));
+});
+
+//closed new folder window
+ipcMain.on("close-new-folder-window", () => {
+  newFolderWindow.close();
+});
+
+//creates new folder based on the data input
+ipcMain.on("new-folder-request", (event, data) => {
+  LoadCards.newFolder(data);
+});
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

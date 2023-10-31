@@ -84,8 +84,28 @@ function getSetContents(set, callback) {
     }
   });
 }
+
+function newFolder(name) {
+  const fs = require("fs");
+ 
+  const path = require("path");
+  const directoryPath = path.join(__dirname, "../flashcards/" + name);
+
+  fs.mkdir(directoryPath, (err) => {
+    if (err) {
+      console.error('error creating directory', err);
+
+    }
+    else {
+      console.log('directory created successfully: ', name);
+    }
+  });
+}
+
+
 module.exports = {
   getFolders,
   getFolderContents,
   getSetContents,
+  newFolder,
 };
