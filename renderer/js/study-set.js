@@ -84,22 +84,28 @@ function handle_card_controls(event) {
     current++;
     next++;
     prev++;
+    if (prev_display_card != null) prev_display_card.classList.add('prev-animate-d');
+    curr_display_card.classList.add('curr-animate-d');
+    next_display_card.classList.add('next-animate-d');
   }
   if (event.key === 'a' && current != 0) {
     current--;
     next--;
     prev--;
+    prev_display_card.classList.add('prev-animate-a');
+    curr_display_card.classList.add('curr-animate-a');
+    next_display_card.classList.add('next-animate-a');
   }
   if (event.key === 'w' || event.key === 's') {
     flashcards[current].isFront = !flashcards[current].isFront;
     curr_display_card.textContent = '';
-    curr_display_card.classList.add('animate');
+    curr_display_card.classList.add('animate-flip');
   }
   setTimeout(function() {
     console.log("This message will appear after a 2-second pause.");
     clear_cards(flashcard_page_list);
     make_cards();
-  }, 400); // 2000 milliseconds (2 seconds)
+  }, 200); // 2000 milliseconds (2 seconds)
 }
 
 

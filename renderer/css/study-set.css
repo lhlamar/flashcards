@@ -54,7 +54,9 @@ nav ul li {
 }
 
 .curr-card {
-  left: 25vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -200px;
   top: 25vh;
   height: 300px;
   
@@ -62,22 +64,70 @@ nav ul li {
 }
 
 .next-card {
-  top: 50vh;
+  top: 25vh;
   right: -350px;
-  transform: translate(0, -50%);
 }
 
 .prev-card {
-  top: 50vh;
+  top: 25vh;
   left: -350px;
-  transform: translate(0, -50%);
 }
 
-.animate {
-  transition: 0.5s;
+.animate-flip {
+  transition: 0.3s;
   
   transform: rotateY(180deg);
 }
+
+.prev-animate-d {
+  transition: 0.1s;
+  left: -400px;
+
+}
+
+.curr-animate-d {
+  transition: .1s;
+  height: 200px;
+  left: calc(0vw - 150px);
+}
+
+.next-animate-d {
+  transition: 0.1s;
+  width: 400px;
+  height: 300px;
+  left: 50%;
+  margin: -200px;
+  margin-top: 0px;
+}
+
+.prev-animate-a {
+  transition: 0.1s;
+  width: 400px;
+  height: 300px;
+
+  left: auto;
+  right: 50%;
+  margin: -200px;
+  margin-top: 0px;
+}
+
+.curr-animate-a {
+  transition: 0.1s;
+  
+  height: 200px;
+  left: calc(100vw + 150px);
+}
+
+.next-animate-a {
+  transition: 0.1s;
+  
+  right: -400px;
+}
+
+
+
+
+
 
 /* xs */
 @media (min-width: 475px) {
