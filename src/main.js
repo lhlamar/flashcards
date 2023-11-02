@@ -8,6 +8,7 @@ let howToUseWindow;
 let newFolderWindow;
 let folders = LoadCards.getFolders();
 let set_data;
+let new_set_folder;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -21,11 +22,14 @@ function createHomeWindow() {
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
+
+      contentSecurityPolicy:
+        "script-src 'self' https://cdn.jsdelivr.net/npm/toastify-js",
     },
     minWidth: 520,
     minHeight: 450,
   });
-  
+
   mainWindow.webContents.openDevTools();
 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
@@ -33,7 +37,6 @@ function createHomeWindow() {
 }
 
 ipcMain.on("main", (event, data) => {
-  console.log(data); // show the request data
   event.returnValue = LoadCards.getFolders(); // send a response for a synchronous request
 });
 
@@ -44,10 +47,30 @@ ipcMain.on("secondary", (event, data) => {
 });
 
 //create new card window
-ipcMain.on("open-new-set-window", () => {
+//here data is the folder name that is clicked
+//this is sent later to the new set window
+//so it can create the set and place it into
+//the correct folder
+ipcMain.on("open-new-set-window", (event, data) => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
-
+  new_set_folder = data;
   mainWindow.loadFile(path.join(__dirname, "../renderer/new-set.html"));
+});
+
+//when the done button is clicked on the new set page
+//a message is sent here containing the new set information
+//that will be used here to create a .json file containing
+//the user's new set
+ipcMain.on("finish-new-set", (event, data) => {
+  mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+  finished_set = data;
+  //passing in the name of the folder
+  //where the set should go
+  LoadCards.newSet(new_set_folder, "new-set", finished_set);
+});
+
+ipcMain.on("get-folder-for-new-set", (event) => {
+  event.returnValue = new_set_folder;
 });
 
 //reloads the main window
@@ -98,13 +121,12 @@ ipcMain.on("open-new-folder-window", () => {
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
-      
     },
     width: 300,
     height: 150,
     resizable: false,
   });
- 
+
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   newFolderWindow.loadFile(path.join(__dirname, "../renderer/new-folder.html"));
 });
@@ -119,7 +141,6 @@ ipcMain.on("new-folder-request", (event, data) => {
   LoadCards.newFolder(data);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
 });
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

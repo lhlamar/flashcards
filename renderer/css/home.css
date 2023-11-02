@@ -1,5 +1,3 @@
-
-
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -101,6 +99,11 @@ nav ul li {
 .button:hover {
   color: var(--bone);
   background-color: var(--onyx-gray);
+}
+
+.selected {
+  background-color: var(--bone);
+  color: var(--onyx);
 }
 
 /* xs */

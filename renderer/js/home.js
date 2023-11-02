@@ -11,16 +11,28 @@ how_to_use_button.addEventListener("click", () => {
 });
 
 new_set_button.addEventListener("click", () => {
-  ipcRenderer.send("open-new-set-window");
+  if (selectedElement) {
+    ipcRenderer.send("open-new-set-window", selectedElement.textContent);
+  } else {
+    Toastify.toast({
+      text: "Please Select a Folder for your Set",
+      duration: 1500,
+      close: false,
+      style: {
+        background: "red",
+        color: "white",
+        textAlign: "center",
+      },
+    });
+  }
 });
 
 new_folder_button.addEventListener("click", () => {
   ipcRenderer.send("open-new-folder-window");
-})
+});
 
 //sends request to main process asking for folders in the set
-folders = ipcRenderer.sendSync("main", "ping");
-console.log(folders);
+folders = ipcRenderer.sendSync("main");
 
 for (folder in folders) {
   const folder_item = document.createElement("li");

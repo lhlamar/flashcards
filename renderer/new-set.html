@@ -31,7 +31,7 @@
     <div class="main-container">
       <div class="new-set-container">
         <div class="section-header">
-          <h1>New Set</h1>
+          <h1 id="set-header">New Set</h1>
         </div>
         <div class="flashcard-list-container">
           <div class="card-container">
@@ -39,11 +39,11 @@
             <div class="card-contents">
               <div class="front">
                 <label>Front</label>
-                <textarea></textarea>
+                <textarea id="front-text"></textarea>
               </div>
               <div class="back">
                 <label>Back</label>
-                <textarea></textarea>
+                <textarea id="back-text"></textarea>
               </div>
             </div>
           </div>
@@ -52,11 +52,11 @@
             <div class="card-contents">
               <div class="front">
                 <label>Front</label>
-                <textarea></textarea>
+                <textarea id="front-text"></textarea>
               </div>
               <div class="back">
                 <label>Back</label>
-                <textarea></textarea>
+                <textarea id="back-text"></textarea>
               </div>
             </div>
           </div>
@@ -66,6 +66,7 @@
         <a id="new-item-button" class="new-item-button button" href="#"
           >new +</a
         >
+        <a id="done-button" class="new-item-button button" href="#">Done</a>
       </h2>
     </div>
     <script src="./js/new-set.js"></script>

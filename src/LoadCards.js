@@ -87,25 +87,50 @@ function getSetContents(set, callback) {
 
 function newFolder(name) {
   const fs = require("fs");
- 
+
   const path = require("path");
   const directoryPath = path.join(__dirname, "../flashcards/" + name);
 
   fs.mkdir(directoryPath, (err) => {
     if (err) {
-      console.error('error creating directory', err);
-
-    }
-    else {
-      console.log('directory created successfully: ', name);
+      console.error("error creating directory", err);
+    } else {
+      console.log("directory created successfully: ", name);
     }
   });
 }
 
+function newSet(location, set_name, set_contents) {
+  location = "./flashcards/" + location;
+  const fs = require("fs");
+  const path = require("path");
+
+  // Create an object with the desired structure
+  const flashcardSet = {
+    flashcards: set_contents,
+  };
+
+  // The second argument (null) is for replacer
+  //function, and the third argument (2) is for indentation.
+  const flashcardSetJSON = JSON.stringify(flashcardSet, null, 2);
+
+  // Define the path where the JSON file will be saved
+  const filePath = path.join(location, `${set_name}.json`);
+
+  // Write the JSON string to the file
+  fs.writeFile(filePath, flashcardSetJSON, "utf8", (err) => {
+    if (err) {
+      console.error("Error writing JSON file:", err);
+    } else {
+      console.log(`JSON file ${set_name}.json created at ${location}`);
+    }
+  });
+}
 
 module.exports = {
   getFolders,
   getFolderContents,
   getSetContents,
   newFolder,
+  newSet,
 };
