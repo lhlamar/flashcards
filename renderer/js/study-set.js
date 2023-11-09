@@ -1,4 +1,4 @@
-import {animate} from './animate.js';
+import { animate } from "./animate.js";
 
 //selectors for page elements
 const back_button = document.getElementById("back-button");
@@ -28,7 +28,7 @@ back_button.addEventListener("click", () => {
 //controls for cards
 document.addEventListener("keypress", (event) => {
   handle_card_controls(event);
-})
+});
 
 //creates cards elements and displays them on page
 //based on given array of cards
@@ -40,79 +40,71 @@ function make_cards() {
       curr_display_card.classList.add("curr-card");
       if (card.isFront) {
         curr_display_card.textContent = card.front;
-      }
-      else {
+      } else {
         curr_display_card.textContent = card.back;
       }
-    flashcard_page_list.appendChild(curr_display_card);
-    }
-    else if (index === next) {
+      flashcard_page_list.appendChild(curr_display_card);
+    } else if (index === next) {
       next_display_card = document.createElement("li");
       next_display_card.classList.add("card");
       next_display_card.classList.add("next-card");
       next_display_card.textContent = card.front;
       if (card.isFront) {
         next_display_card.textContent = card.front;
-      }
-      else {
+      } else {
         next_display_card.textContent = card.back;
       }
-    flashcard_page_list.appendChild(next_display_card);
-    }
-    else if (index === prev) {
+      flashcard_page_list.appendChild(next_display_card);
+    } else if (index === prev) {
       prev_display_card = document.createElement("li");
       prev_display_card.classList.add("card");
       prev_display_card.classList.add("prev-card");
       prev_display_card.textContent = card.front;
       if (card.isFront) {
         prev_display_card.textContent = card.front;
-      }
-      else {
+      } else {
         prev_display_card.textContent = card.back;
       }
-    flashcard_page_list.appendChild(prev_display_card);
+      flashcard_page_list.appendChild(prev_display_card);
     }
   }
 }
 
 function clear_cards(list) {
-  list.innerHTML = '';
+  list.innerHTML = "";
 }
 
 function handle_card_controls(event) {
-  if (event.key === 'd' && current != flashcards.length - 1) {
+  if (event.key === "d" && current != flashcards.length - 1) {
     current++;
     next++;
     prev++;
-    if (prev_display_card != null) prev_display_card.classList.add('prev-animate-d');
-    curr_display_card.classList.add('curr-animate-d');
-    next_display_card.classList.add('next-animate-d');
+    if (prev_display_card != null)
+      prev_display_card.classList.add("prev-animate-d");
+    curr_display_card.classList.add("curr-animate-d");
+    next_display_card.classList.add("next-animate-d");
   }
-  if (event.key === 'a' && current != 0) {
+  if (event.key === "a" && current != 0) {
     current--;
     next--;
     prev--;
-    prev_display_card.classList.add('prev-animate-a');
-    curr_display_card.classList.add('curr-animate-a');
-    next_display_card.classList.add('next-animate-a');
+    prev_display_card.classList.add("prev-animate-a");
+    curr_display_card.classList.add("curr-animate-a");
+    next_display_card.classList.add("next-animate-a");
   }
-  if (event.key === 'w' || event.key === 's') {
+  if (event.key === "w" || event.key === "s") {
     flashcards[current].isFront = !flashcards[current].isFront;
-    curr_display_card.textContent = '';
-    curr_display_card.classList.add('animate-flip');
+    curr_display_card.textContent = "";
+    curr_display_card.classList.add("animate-flip");
   }
-  setTimeout(function() {
+  setTimeout(function () {
     console.log("This message will appear after a 2-second pause.");
     clear_cards(flashcard_page_list);
     make_cards();
   }, 200); // 2000 milliseconds (2 seconds)
 }
 
-
-
-//main processes start here 
+//main processes start here
 make_cards();
 // animates the page events
 // defined in animate.js
-
-

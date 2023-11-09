@@ -37,7 +37,7 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .new-set-container {
@@ -47,7 +47,7 @@ textarea {
   background-color: var(--wenge);
   text-align: center;
 
-  clip-path: inset(0 round 25px);
+  clip-path: inset(0 round 10px);
 
   min-width: 480px;
 
@@ -68,7 +68,7 @@ textarea {
   margin-left: 20px;
   margin-right: 20px;
   background-color: var(--onyx-gray);
-  clip-path: inset(0 round 20px);
+  clip-path: inset(0 round 10px);
 
   height: calc(100% - 100px);
   overflow-y: scroll;
@@ -85,7 +85,7 @@ textarea {
 
 .card-container {
   background-color: var(--onyx-dark);
-  padding-top: 5px;
+  padding-top: 8px;
   padding-bottom: 10px;
   width: calc(100% - 10px);
   margin: auto;
@@ -98,6 +98,23 @@ textarea {
   margin-top: 5px;
   margin-bottom: 5px;
   text-decoration: underline;
+  display: inline;
+  margin-left: 75px;
+}
+#minus-button {
+  display: inline;
+  float: right;
+  margin-right: 20px;
+  color: var(--onyx-dark);
+  background-color: var(--bone);
+  padding-right: 5px;
+  padding-left: 5px;
+  clip-path: inset(0 round 5px);
+}
+#minus-button:hover {
+  background: var(--wenge);
+  color: var(--bone);
+  cursor: pointer;
 }
 
 .card-contents {

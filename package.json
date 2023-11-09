@@ -15,6 +15,7 @@
   "author": "llama",
   "license": "MIT",
   "dependencies": {
+    "electron-context-menu": "^3.6.1",
     "electron-squirrel-startup": "^1.0.0",
     "electronmon": "^2.0.2",
     "save": "^2.9.0",

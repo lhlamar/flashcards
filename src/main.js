@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, MenuItem } = require("electron");
+const contextMenu = require("electron-context-menu");
 const path = require("path");
 
 const LoadCards = require("./LoadCards");
@@ -9,6 +10,12 @@ let newFolderWindow;
 let folders = LoadCards.getFolders();
 let set_data;
 let new_set_folder;
+let nameSetWindow;
+let new_set_name;
+let confirmationWindow;
+let selectedFolder;
+let selectedSet;
+let deleteSetConfirmationWindow;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -34,14 +41,19 @@ function createHomeWindow() {
 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+  // Attach context menu to mainWindow
 }
+
+ipcMain.on("show-context-menu", (event, elementData) => {
+  console.log(elementData);
+});
 
 ipcMain.on("main", (event, data) => {
   event.returnValue = LoadCards.getFolders(); // send a response for a synchronous request
 });
 
 ipcMain.on("secondary", (event, data) => {
-  console.log(data); // show the request data
+  selectedFolder = data;
 
   event.returnValue = LoadCards.getFolderContents(data);
 });
@@ -66,7 +78,6 @@ ipcMain.on("finish-new-set", (event, data) => {
   finished_set = data;
   //passing in the name of the folder
   //where the set should go
-  LoadCards.newSet(new_set_folder, "new-set", finished_set);
 });
 
 ipcMain.on("get-folder-for-new-set", (event) => {
@@ -83,20 +94,44 @@ ipcMain.on("open-home-window", () => {
 //the study set
 ipcMain.on("open-study-set-window", (event, data) => {
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
-  mainWindow.loadFile(path.join(__dirname, "../renderer/study-set.html"));
+  set_data = LoadCards.getSetContents(data);
 
-  LoadCards.getSetContents(data, (error, jsonData) => {
-    if (error) {
-      // Handle the error
-    } else {
-      // Work with the jsonData here
-      set_data = jsonData;
-    }
-  });
+  if (set_data != null) {
+    mainWindow.loadFile(path.join(__dirname, "../renderer/study-set.html"));
+  } else {
+    mainWindow.webContents.send("null-set-error");
+  }
 });
 
 ipcMain.on("get-set-data", (event) => {
   event.returnValue = set_data;
+});
+
+// name set window
+ipcMain.on("open-name-set-window", () => {
+  nameSetWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+    width: 300,
+    height: 150,
+    resizable: false,
+  });
+
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  nameSetWindow.loadFile(path.join(__dirname, "../renderer/name-set.html"));
+});
+
+ipcMain.on("name-set-window-cancel", () => {
+  nameSetWindow.close();
+});
+
+ipcMain.on("name-set-window-done", (event, data) => {
+  new_set_name = data;
+  LoadCards.newSet(new_set_folder, new_set_name, finished_set);
+  nameSetWindow.close();
 });
 
 // How To Use Window
@@ -140,6 +175,63 @@ ipcMain.on("close-new-folder-window", () => {
 ipcMain.on("new-folder-request", (event, data) => {
   LoadCards.newFolder(data);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+});
+
+ipcMain.on("remove-folder", (event, data) => {
+  confirmationWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+    width: 300,
+    height: 150,
+    resizable: false,
+  });
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  confirmationWindow.loadFile(
+    path.join(__dirname, "../renderer/confirmation.html")
+  );
+});
+
+//opens confirmation window for when user is trying to delete a new set
+ipcMain.on("remove-set", (event, data) => {
+  selectedSet = data;
+  deleteSetConfirmationWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+    width: 300,
+    height: 150,
+    resizable: false,
+  });
+  // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+  deleteSetConfirmationWindow.loadFile(
+    path.join(__dirname, "../renderer/delete-set-confirmation.html")
+  );
+});
+
+ipcMain.on("delete-set-confirmation-window-proceed", (event, data) => {
+  LoadCards.removeSet(selectedFolder, selectedSet);
+  deleteSetConfirmationWindow.close();
+  mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+});
+
+ipcMain.on("close-delete-set-confirmation-window", (event, data) => {
+  deleteSetConfirmationWindow.close();
+});
+
+//confirmation window handle proceed
+ipcMain.on("confirmation-window-proceed", () => {
+  LoadCards.removeFolder(selectedFolder);
+  mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+});
+
+//closes confirmation window
+ipcMain.on("close-confirmation-window", () => {
+  confirmationWindow.close();
 });
 
 // This method will be called when Electron has finished

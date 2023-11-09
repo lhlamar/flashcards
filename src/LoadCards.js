@@ -57,32 +57,25 @@ function getFolderContents(folder) {
 //of the set that needs to be retrived
 //returns a list of cards. each item in the list has a
 //front and a back that it returns as well
-function getSetContents(set, callback) {
+function getSetContents(set) {
   const fs = require("fs");
 
   // Specify the path to your JSON file
   const filePath = set;
 
-  // Read the file
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      callback(err, null);
-      return;
-    }
+  try {
+    // Read the file synchronously
+    const data = fs.readFileSync(filePath, "utf8");
 
-    try {
-      // Parse the JSON data
-      const jsonData = JSON.parse(data);
+    // Parse the JSON data
+    const jsonData = JSON.parse(data);
 
-      // Now you can work with the JSON data
-
-      callback(null, jsonData);
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-      callback(error, null);
-    }
-  });
+    // Now you can work with the JSON data
+    return jsonData;
+  } catch (error) {
+    console.error("Error reading/parsing the file:", error);
+    return null;
+  }
 }
 
 function newFolder(name) {
@@ -98,6 +91,66 @@ function newFolder(name) {
       console.log("directory created successfully: ", name);
     }
   });
+}
+
+function removeFolder(targetDir) {
+  const fs = require("fs");
+  const path = require("path");
+  const rimraf = require("rimraf");
+  targetDir = path.join(__dirname, "../flashcards/" + targetDir);
+
+  if (fs.existsSync(targetDir)) {
+    if (fs.lstatSync(targetDir).isDirectory()) {
+      // List the files and subdirectories in the target directory
+      const files = fs.readdirSync(targetDir);
+
+      files.forEach((file) => {
+        const filePath = path.join(targetDir, file);
+
+        // Check if the item is a directory
+        if (fs.lstatSync(filePath).isDirectory()) {
+          // Recursively delete subdirectories
+          deleteDirectoryRecursively(filePath);
+        } else {
+          // Delete files within the target directory
+          fs.unlinkSync(filePath);
+        }
+      });
+
+      // Use rimraf to remove the target directory itself
+      rimraf.sync(targetDir);
+    } else {
+      // Handle the case where the targetDir is not a directory
+      console.error(`${targetDir} is not a directory.`);
+    }
+  } else {
+    // Handle the case where the targetDir doesn't exist
+    console.error(`${targetDir} does not exist.`);
+  }
+}
+
+function removeSet(folder, set) {
+  const fs = require("fs");
+  const path = require("path");
+
+  filename = set + ".json";
+  filePath = path.join(__dirname, "../flashcards/" + folder + "/" + filename);
+  console.log(filePath);
+  console.log(filename);
+  // Check if the file exists
+  if (fs.existsSync(filePath)) {
+    try {
+      // Attempt to delete the file
+      fs.unlinkSync(filePath);
+      console.log(`File '${filename}' deleted successfully.`);
+    } catch (err) {
+      console.error(`Error deleting file '${filename}': ${err.message}`);
+    }
+  } else {
+    console.error(
+      `File '${filename}' does not exist in the directory '${filePath}'.`
+    );
+  }
 }
 
 function newSet(location, set_name, set_contents) {
@@ -133,4 +186,6 @@ module.exports = {
   getSetContents,
   newFolder,
   newSet,
+  removeFolder,
+  removeSet,
 };
