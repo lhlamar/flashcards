@@ -69,9 +69,17 @@ remove_set_button.addEventListener("click", () => {
   }
 });
 
-edit_set_button.addEventListener("click", () => {
+//event handler for when the user selects the edit set button
+edit_set_button.addEventListener("click", (event) => {
   if (selectedSet != null) {
-    console.log(selectedSet);
+    ipcRenderer.send(
+      "open-edit-set-window",
+      "./flashcards/" +
+        selectedElement.innerText +
+        "/" +
+        selectedSet.innerText +
+        ".json"
+    );
   } else {
     Toastify.toast({
       text: "Please Select a set to edit",
@@ -118,7 +126,7 @@ for (folder in folders) {
 //loads the sets of a folder when the folder is clicked
 function loadSets(folder) {
   folderContents = ipcRenderer.sendSync("secondary", folder);
-  console.log(folderContents);
+  ipcRenderer.sendSync;
 
   while (set_list.firstChild) {
     set_list.removeChild(set_list.firstChild);
@@ -148,6 +156,7 @@ function loadSets(folder) {
           item.classList.add("selected");
           selectedSet = item;
         }
+        ipcRenderer.send("set-selected-set", selectedSet.innerText);
       });
       set_item_contents.addEventListener("dblclick", (event) => {
         //send the url of the set to load

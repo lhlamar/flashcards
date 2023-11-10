@@ -69,6 +69,15 @@ ipcMain.on("open-new-set-window", (event, data) => {
   mainWindow.loadFile(path.join(__dirname, "../renderer/new-set.html"));
 });
 
+//when a set is selected and the user chooses to edit the new set,
+//the edit-set-window is loaded and the selected set
+//is sent to the edit set renderer process
+ipcMain.on("open-edit-set-window", (event, data) => {
+  set_data = LoadCards.getSetContents(data);
+
+  mainWindow.loadFile(path.join(__dirname, "../renderer/edit-set.html"));
+});
+
 //when the done button is clicked on the new set page
 //a message is sent here containing the new set information
 //that will be used here to create a .json file containing
@@ -82,6 +91,14 @@ ipcMain.on("finish-new-set", (event, data) => {
 
 ipcMain.on("get-folder-for-new-set", (event) => {
   event.returnValue = new_set_folder;
+});
+
+ipcMain.on("set-selected-set", (event, data) => {
+  selectedSet = data;
+});
+
+ipcMain.on("get-selected-set", (event, data) => {
+  event.returnValue = selectedSet;
 });
 
 //reloads the main window
@@ -197,6 +214,7 @@ ipcMain.on("remove-folder", (event, data) => {
 //opens confirmation window for when user is trying to delete a new set
 ipcMain.on("remove-set", (event, data) => {
   selectedSet = data;
+
   deleteSetConfirmationWindow = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
