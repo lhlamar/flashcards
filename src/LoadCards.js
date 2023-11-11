@@ -158,7 +158,7 @@ function removeSet(folder, set) {
   const path = require("path");
 
   filename = set + ".json";
-  const filePath = path.join(appDataDir, 'flashcards', folders, folder, filename);
+  const filePath = path.join(appDataDir, 'flashcards', 'folders', folder, filename);
   console.log(filePath);
   console.log(filename);
   // Check if the file exists

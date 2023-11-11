@@ -96,30 +96,37 @@ edit_set_button.addEventListener("click", (event) => {
 //sends request to main process asking for folders
 folders = ipcRenderer.sendSync("main");
 
-for (folder in folders) {
-  const folder_item = document.createElement("li");
-  const folder_item_contents = document.createElement("li");
-  folder_item_contents.className = "folder-item";
-  folder_item_contents.classList.add("not-selected");
-  folder_item_contents.href = "#";
-  folder_item_contents.textContent = folders[folder];
-  folder_item.appendChild(folder_item_contents);
-  folder_list.appendChild(folder_item);
 
-  folder_item_contents.addEventListener("click", (event) => {
-    selectedSet = null;
-    const item = event.target;
-    if (selectedElement != null) selectedElement.classList.remove("selected");
-    if (selectedElement != null) selectedElement.classList.add("not-selected");
-
-    if (item.classList.contains("not-selected")) {
-      item.classList.remove("not-selected");
-      item.classList.add("selected");
-      selectedElement = item;
+if (folders.length > 0) {
+  for (folder in folders) {
+    const folder_item = document.createElement("li");
+    const folder_item_contents = document.createElement("li");
+    folder_item_contents.className = "folder-item";
+    folder_item_contents.classList.add("not-selected");
+    folder_item_contents.href = "#";
+    folder_item_contents.textContent = folders[folder];
+    folder_item.appendChild(folder_item_contents);
+    folder_list.appendChild(folder_item);
+  
+    folder_item_contents.addEventListener("click", (event) => {
+      selectedSet = null;
+      const item = event.target;
+      if (selectedElement != null) selectedElement.classList.remove("selected");
+      if (selectedElement != null) selectedElement.classList.add("not-selected");
+  
+      if (item.classList.contains("not-selected")) {
+        item.classList.remove("not-selected");
+        item.classList.add("selected");
+        selectedElement = item;
+      }
+      ipcRenderer.send("selected", selectedElement.innerText);
+      loadSets(selectedElement.textContent);
+    });
     }
-    ipcRenderer.send("selected", selectedElement.innerText);
-    loadSets(selectedElement.textContent);
-  });
+} else {
+  const placeholder = document.createElement("h2");
+  placeholder.innerText = "no folders yet, click new+ to make one";
+  folder_list.appendChild(placeholder);
 }
 
 //loads the sets of a folder when the folder is clicked
