@@ -33,11 +33,12 @@ function createHomeWindow() {
       contentSecurityPolicy:
         "script-src 'self' https://cdn.jsdelivr.net/npm/toastify-js",
     },
+    title: 'Flashcards',
     minWidth: 520,
     minHeight: 450,
   });
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
   mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
@@ -75,7 +76,12 @@ ipcMain.on("open-new-set-window", (event, data) => {
 ipcMain.on("open-edit-set-window", (event, data) => {
   set_data = LoadCards.getSetContents(data);
 
-  mainWindow.loadFile(path.join(__dirname, "../renderer/edit-set.html"));
+  if (set_data != null) {
+    mainWindow.loadFile(path.join(__dirname, "../renderer/edit-set.html"));
+  }
+  else {
+    mainWindow.webContents.send("null-set-error");
+  }
 });
 
 //when the done button is clicked on the new set page
@@ -87,6 +93,13 @@ ipcMain.on("finish-new-set", (event, data) => {
   finished_set = data;
   //passing in the name of the folder
   //where the set should go
+});
+
+ipcMain.on("finish-edit-set", (event, data) => {
+  finished_set = data;
+  LoadCards.newSet(selectedFolder, selectedSet, finished_set);
+  mainWindow.loadFile(path.join(__dirname, "../renderer/home.html"));
+
 });
 
 ipcMain.on("get-folder-for-new-set", (event) => {
@@ -256,6 +269,7 @@ ipcMain.on("close-confirmation-window", () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
+  LoadCards.createMainFlashcardFolder();
   createHomeWindow();
   Menu.setApplicationMenu(null);
   // const mainMenu = Menu.buildFromTemplate(menu);

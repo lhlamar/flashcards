@@ -93,6 +93,23 @@ function newFolder(name) {
   });
 }
 
+function createMainFlashcardFolder() {
+  const fs = require("fs");
+
+  const path = require("path");
+  const directoryPath = path.join(__dirname, "../flashcards/");
+
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdir(directoryPath, (err) => {
+      if (err) {
+        console.error("error creating directory", err);
+      } else {
+        console.log("directory created successfully: ", "main card folder");
+      }
+    });
+  }
+}
+
 function removeFolder(targetDir) {
   const fs = require("fs");
   const path = require("path");
@@ -188,4 +205,5 @@ module.exports = {
   newSet,
   removeFolder,
   removeSet,
+  createMainFlashcardFolder,
 };

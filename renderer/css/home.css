@@ -25,7 +25,8 @@ nav ul li {
 }
 
 .main-container {
-  margin-top: 18px;
+  margin-top: 5vh;
+  
   height: 80vh;
   display: flex;
   justify-content: center;
@@ -34,6 +35,7 @@ nav ul li {
 .main-folder-container {
   min-width: 300px;
   max-width: 350px;
+  max-height: 570px;
   width: 40vw;
 
   background-color: var(--wenge);
@@ -53,6 +55,7 @@ nav ul li {
 .main-set-container {
   min-width: 300px;
   max-width: 350px;
+  max-height: 570px;
   width: 40vw;
   background-color: var(--wenge);
   text-align: center;

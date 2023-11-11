@@ -1,4 +1,4 @@
-let num_of_card = 2;
+let num_of_card = 0;
 //this is the what will be gathered when the user
 //selects 'done'
 let finished_card_list = [];
@@ -11,14 +11,34 @@ const how_to_use_button = document.getElementById("how-to-use-button");
 const done_button = document.getElementById("done-button");
 const set_header = document.getElementById("set-header");
 const remove_card_button = document.querySelectorAll("#minus-button");
+const card_template = document.querySelector("#card-template");
+card_template.style.display = "none";
 
 // this sends a message to the main process to get the folder
 // that is open when the user clicks 'new set'
-let set_data = ipcRenderer.sendSync("get-set-data");
+let set_data = ipcRenderer.sendSync("get-set-data").flashcards;
+
 let set_name = ipcRenderer.sendSync("get-selected-set");
 
 //loop that will go through and create cards for each
 //item already on the list
+for (let i = 0; i < set_data.length; i++) {
+  num_of_card++;
+  const new_card = card_template.cloneNode(true);
+  new_card.style.display = "block";
+
+  new_card.querySelector("#front-text").value = set_data[i].front;
+  new_card.querySelector("#back-text").value = set_data[i].back;
+
+  new_card.querySelector("#minus-button").addEventListener("click", (event) => {
+    remove_card(event);
+  });
+
+  const new_card_header = new_card.querySelector(".card-header");
+  new_card_header.innerHTML = `card ${num_of_card}`;
+
+  card_list.appendChild(new_card);
+}
 
 set_header.textContent = `edit ${set_name}`;
 
@@ -35,7 +55,6 @@ back_button.addEventListener("click", () => {
 });
 
 done_button.addEventListener("click", () => {
-  ipcRenderer.send("open-name-set-window");
   finish_set();
 });
 
@@ -47,7 +66,9 @@ remove_card_button.forEach(function (button) {
 
 function new_card() {
   num_of_card++;
-  const new_card = card.cloneNode(true);
+  const new_card = card_template.cloneNode(true);
+  new_card.style.display = "block";
+
   new_card.querySelector("#front-text").value = "";
   new_card.querySelector("#back-text").value = "";
 
@@ -67,7 +88,7 @@ function remove_card(event) {
     card_list.removeChild(card_to_delete);
     const set_headers = document.querySelectorAll(".card-header");
     set_headers.forEach(function (header, index) {
-      index++;
+      index;
       header.innerHTML = "card " + index;
     });
 
@@ -93,7 +114,7 @@ function remove_card(event) {
 //the .json file where the set will be stored
 function finish_set() {
   //this loop looks though each "card item" in the new set
-  for (let i = 0; i < card_list.childNodes.length; i++) {
+  for (let i = 2; i < card_list.childNodes.length; i++) {
     const item = card_list.childNodes[i];
     if (item.className === "card-container") {
       const front_text = item.querySelector("#front-text").value;
@@ -103,5 +124,5 @@ function finish_set() {
     }
   }
 
-  ipcRenderer.send("finish-new-set", finished_card_list);
+  ipcRenderer.send("finish-edit-set", finished_card_list);
 }
