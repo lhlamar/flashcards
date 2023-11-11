@@ -74,7 +74,6 @@ edit_set_button.addEventListener("click", (event) => {
   if (selectedSet != null) {
     ipcRenderer.send(
       "open-edit-set-window",
-      "./flashcards/" +
         selectedElement.innerText +
         "/" +
         selectedSet.innerText +
@@ -162,7 +161,7 @@ function loadSets(folder) {
         //send the url of the set to load
         ipcRenderer.send(
           "open-study-set-window",
-          "./flashcards/" + folder + "/" + event.target.textContent + ".json"
+          folder + "/" + event.target.textContent + ".json"
         );
       });
     }

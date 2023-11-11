@@ -1,12 +1,13 @@
 //this file will contain functions that will read and write to the user's
 //filesystem. it will be able to create access the created flashcards.
+const appDataDir = process.env.APPDATA; // Get the AppData directory on Windows
 
 function getFolders() {
   const fs = require("fs");
   const os = require("os");
   const path = require("path");
 
-  const dataPath = path.join(__dirname, "../flashcards");
+  const dataPath = path.join(appDataDir, 'flashcards', 'folders');
   const folders = [];
 
   try {
@@ -32,7 +33,7 @@ function getFolderContents(folder) {
   const os = require("os");
   const path = require("path");
 
-  const dataPath = path.join(__dirname, "../flashcards/" + folder);
+  const dataPath = path.join(appDataDir, 'flashcards', 'folders', folder);
   const folderContents = [];
 
   try {
@@ -59,9 +60,11 @@ function getFolderContents(folder) {
 //front and a back that it returns as well
 function getSetContents(set) {
   const fs = require("fs");
+  const path = require("path");
 
   // Specify the path to your JSON file
-  const filePath = set;
+  const filePath = path.join(appDataDir, 'flashcards', 'folders', set);
+  
 
   try {
     // Read the file synchronously
@@ -82,7 +85,7 @@ function newFolder(name) {
   const fs = require("fs");
 
   const path = require("path");
-  const directoryPath = path.join(__dirname, "../flashcards/" + name);
+  const directoryPath = path.join(appDataDir, 'flashcards', 'folders', name);
 
   fs.mkdir(directoryPath, (err) => {
     if (err) {
@@ -94,27 +97,31 @@ function newFolder(name) {
 }
 
 function createMainFlashcardFolder() {
-  const fs = require("fs");
+  const fs = require('fs');
+const path = require('path');
 
-  const path = require("path");
-  const directoryPath = path.join(__dirname, "../flashcards/");
 
-  if (!fs.existsSync(directoryPath)) {
-    fs.mkdir(directoryPath, (err) => {
-      if (err) {
-        console.error("error creating directory", err);
-      } else {
-        console.log("directory created successfully: ", "main card folder");
-      }
-    });
+
+if (appDataDir) {
+  const flashcardsDir = path.join(appDataDir, 'flashcards', 'folders');
+
+  // Check if the directory already exists, and create it if it doesn't
+  if (!fs.existsSync(flashcardsDir)) {
+    fs.mkdirSync(flashcardsDir);
+    console.log('Created "flashcards" directory in AppData.');
+  } else {
+    console.log('"flashcards" directory already exists in AppData.');
   }
+} else {
+  console.error('Unable to access the AppData directory.');
+}
 }
 
 function removeFolder(targetDir) {
   const fs = require("fs");
   const path = require("path");
   const rimraf = require("rimraf");
-  targetDir = path.join(__dirname, "../flashcards/" + targetDir);
+  targetDir = path.join(appDataDir, 'flashcards', 'folders', targetDir);
 
   if (fs.existsSync(targetDir)) {
     if (fs.lstatSync(targetDir).isDirectory()) {
@@ -151,7 +158,7 @@ function removeSet(folder, set) {
   const path = require("path");
 
   filename = set + ".json";
-  filePath = path.join(__dirname, "../flashcards/" + folder + "/" + filename);
+  const filePath = path.join(appDataDir, 'flashcards', folders, folder, filename);
   console.log(filePath);
   console.log(filename);
   // Check if the file exists
@@ -171,9 +178,11 @@ function removeSet(folder, set) {
 }
 
 function newSet(location, set_name, set_contents) {
-  location = "./flashcards/" + location;
+  
+  
   const fs = require("fs");
   const path = require("path");
+  const filePath = path.join(appDataDir, 'flashcards', 'folders', location, `${set_name}.json`)
 
   // Create an object with the desired structure
   const flashcardSet = {
@@ -185,7 +194,6 @@ function newSet(location, set_name, set_contents) {
   const flashcardSetJSON = JSON.stringify(flashcardSet, null, 2);
 
   // Define the path where the JSON file will be saved
-  const filePath = path.join(location, `${set_name}.json`);
 
   // Write the JSON string to the file
   fs.writeFile(filePath, flashcardSetJSON, "utf8", (err) => {
